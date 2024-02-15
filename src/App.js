@@ -15,7 +15,7 @@ import AgentScreen from "./components/AgentScreen/AgentScreen";
 function App() {
   const {userLoggedIn }=useAuth();
   const {FBuserLoggedIn}=useFBAuth();
-  // process.env.HTTPS = true;
+  const token=localStorage.getItem(process.env.REACT_APP_FB_TOKEN) || false;
   return (
       <Routes>
         <Route
@@ -26,9 +26,8 @@ function App() {
         <Route path="/signup" element={userLoggedIn ? <Navigate to="/" /> : <Signup />} />
         <Route path="*" element={<Navigate to="/login" />} />
 
-
-        <Route path="/integrationSuccess" element={FBuserLoggedIn?<Integrated/>:<Navigate to="/"/>}/>
-        <Route path="/integrationSuccess/agentScreen" element={FBuserLoggedIn?<AgentScreen/>:<Navigate to="/"/>}/>
+        <Route path="/integrationSuccess" element={token?<Integrated/>:<Navigate to="/"/>}/>
+        <Route path="/integrationSuccess/agentScreen" element={token?<AgentScreen/>:<Navigate to="/"/>}/>
       </Routes>
     
   );

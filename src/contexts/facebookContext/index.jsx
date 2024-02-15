@@ -23,11 +23,11 @@ export function FBAuthProvider({children}){
         // Check Facebook login status on mount
         initFacebookSdk().then(() => {
           getFacebookLoginStatus(navigate).then((response) => {
-            console.log(response)
+            // console.log(response)
             if (response.status === 'connected') {
               setFBUserLoggedIn(true);
               console.log("User is logged in");
-              navigate("/integrationsuccess");
+              // navigate("/integrationsuccess");
               // Access other properties if needed: response.authResponse.userID, response.authResponse.accessToken
             } else {
               console.log("User is not logged in");

@@ -46,6 +46,7 @@ export const fbLogin = () => {
   return new Promise((resolve, reject) => {
     try {
       window.FB.login((response) => {
+        localStorage.setItem(process.env.REACT_APP_FB_TOKEN,response.authResponse.accessToken)
         resolve(response);
       });
     } catch (err) {
