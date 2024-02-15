@@ -26,8 +26,8 @@ function App() {
         <Route path="/signup" element={userLoggedIn ? <Navigate to="/" /> : <Signup />} />
         <Route path="*" element={<Navigate to="/login" />} />
 
-        <Route path="/integrationSuccess" element={token?<Integrated/>:<Navigate to="/"/>}/>
-        <Route path="/integrationSuccess/agentScreen" element={token?<AgentScreen/>:<Navigate to="/"/>}/>
+        <Route path="/integrationSuccess" element={token&&userLoggedIn?<Integrated/>:<Navigate to="/"/>}/>
+        <Route path="/integrationSuccess/agentScreen" element={token&&userLoggedIn?<AgentScreen/>:<Navigate to="/"/>}/>
       </Routes>
     
   );

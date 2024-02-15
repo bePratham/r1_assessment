@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import { useFBAuth } from '../../contexts/facebookContext';
 
 const AgentScreen = () => {
-  const { FBuserLoggedIn } = useFBAuth();
+  const { FBuserLoggedIn,currentFBUser } = useFBAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -14,6 +14,7 @@ const AgentScreen = () => {
         { 'fields': 'id,name' },
         function (response) {
           console.log(response);
+          console.log(currentFBUser.accessToken);
         }
       );
     }
@@ -24,8 +25,10 @@ const AgentScreen = () => {
   }
 
   return (
-    <div>
+    <div style={{display:'flex'}}>
       <Navbar />
+      hellodiv
+  
     </div>
   );
 }

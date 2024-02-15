@@ -1,4 +1,3 @@
-
 export const initFacebookSdk = () => {
   return new Promise((resolve, reject) => {
     // Load the Facebook SDK asynchronously
@@ -24,19 +23,18 @@ export const initFacebookSdk = () => {
   });
 };
 export const getFacebookLoginStatus = (navigate) => {
-  
   return new Promise((resolve, reject) => {
     try {
-      window.FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {         
-          resolve(response);  
-        } else if (response.status === 'not_authorized') {
+      window.FB.getLoginStatus(function (response) {
+        if (response.status === "connected") {
+          resolve(response);
+        } else if (response.status === "not_authorized") {
           console.log("Not authorized");
           resolve(response);
         } else {
-          navigate("/")  
+          navigate("/");
         }
-       });
+      });
     } catch (err) {
       console.log(reject);
     }
@@ -46,20 +44,27 @@ export const fbLogin = () => {
   return new Promise((resolve, reject) => {
     try {
       window.FB.login((response) => {
-        localStorage.setItem(process.env.REACT_APP_FB_TOKEN,response.authResponse.accessToken)
-        resolve(response);
+        if (response.status === "connected") {
+          localStorage.setItem(
+            process.env.REACT_APP_FB_TOKEN,
+            response.authResponse.accessToken
+          );
+          resolve(response);
+        } else {
+          reject(new Error("Facebook login failed."));
+        }
       });
     } catch (err) {
-      console.log(err);
-      reject(err)
+      console.log("Failed complete");
+      reject(err);
     }
   });
 };
 export const FBLogout = () => {
-  localStorage.setItem(process.env.REACT_APP_FB_TOKEN, "");  
-
- return window.FB.logout(() => {
-      console.log("Logout");
-      window.location.reload();
-    });
+  localStorage.setItem(process.env.REACT_APP_FB_TOKEN, "");
+  console.log("called");
+  return window.FB.logout(() => {
+    console.log("Logout");
+    window.location.reload();
+  });
 };
