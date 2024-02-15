@@ -5,14 +5,17 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from './contexts/authContext';
+import { FBAuthProvider, useFBAuth } from "./contexts/facebookContext";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <BrowserRouter>
     <AuthProvider>
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>
+      <FBAuthProvider>
+            <App />
+      </FBAuthProvider>
     </AuthProvider>
+  </BrowserRouter>
   </React.StrictMode>
 );
 
