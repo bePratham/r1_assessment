@@ -62,7 +62,6 @@ export const fbLogin = () => {
 };
 export const FBLogout = () => {
   localStorage.setItem(process.env.REACT_APP_FB_TOKEN, "");
-  console.log("called");
   return window.FB.logout(() => {
     console.log("Logout");
     window.location.reload();

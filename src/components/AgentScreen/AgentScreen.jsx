@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react'
 import Navbar from './Navbar'
 import { useFBAuth } from '../../contexts/facebookContext';
+import MessageApp from './MainPage';
 
 const AgentScreen = () => {
   const { FBuserLoggedIn,currentFBUser } = useFBAuth();
@@ -27,8 +28,7 @@ const AgentScreen = () => {
   return (
     <div style={{display:'flex'}}>
       <Navbar />
-      hellodiv
-  
+      <MessageApp/>
     </div>
   );
 }
