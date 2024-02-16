@@ -1,7 +1,6 @@
 import React from "react";
 
 const InfoCard = ({ person }) => {
-  console.log(person);
   return (
     <div>
       <div className="bg-white py-7 flex flex-col items-center justify-center">
