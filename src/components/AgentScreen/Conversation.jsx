@@ -10,8 +10,6 @@ const Conversation = ({ selectedItem }) => {
          </h1>
          <div className='h-max'>
             <ChatPage/>
-          
-      {/* </div> */}
          </div>
       </div>
     ) : (

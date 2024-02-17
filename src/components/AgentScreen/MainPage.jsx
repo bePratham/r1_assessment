@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import InboxList from './InboxList';
 import Conversation from './Conversation';
 import Details from './Details';
