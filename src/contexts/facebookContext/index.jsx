@@ -50,6 +50,7 @@ export function FBAuthProvider({children}){
             // Handle error if needed
           }
         }
+        window.location.reload();
       };
 
     const value={
