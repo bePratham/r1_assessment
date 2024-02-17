@@ -5,7 +5,7 @@ const CustomerDetails = ({person}) => {
     <div className='m-2 bg-white border rounded shadow p-3'>
         <h1 className='font-semibold'>Customer details</h1>
     <div className='flex justify-between'>
-        <div className='text-gray-400 '>
+        <div className='w-1/2 text-gray-400 '>
         <p>Email</p>
         <p>First Name</p>
         <p>Last Name</p>

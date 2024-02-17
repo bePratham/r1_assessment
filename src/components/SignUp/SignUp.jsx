@@ -34,7 +34,7 @@ const SignUp = () => {
       <div className="flex flex-col justify-center items-center p-25 bg-white p-6 rounded-md shadow-md w-1/2">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Login in to your account
+            Create Account
           </h2>
         </div>
 
