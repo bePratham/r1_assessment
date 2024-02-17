@@ -40,7 +40,7 @@ export const getFacebookLoginStatus = (navigate) => {
     }
   });
 };
-export const fbLogin = () => {
+export const fbLogin = (navigate) => {
   return new Promise((resolve, reject) => {
     try {
       window.FB.login((response) => {
@@ -49,6 +49,7 @@ export const fbLogin = () => {
             process.env.REACT_APP_FB_TOKEN,
             response.authResponse.accessToken
           );
+          navigate("/integrationsuccess")
           resolve(response);
         } else {
           reject(new Error("Facebook login failed."));

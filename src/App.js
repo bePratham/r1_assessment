@@ -15,16 +15,11 @@ import AgentScreen from "./components/AgentScreen/AgentScreen";
 function App() {
   const {userLoggedIn,loading }=useAuth();
   const token=localStorage.getItem(process.env.REACT_APP_FB_TOKEN) || false;
-
-  // useEffect(() => {
+    
+    if(loading){
+    return <div>Loading...</div>;}
   
-  // }, []);
-
-  if (loading) {
-   
-    return <div>Loading...</div>;
-  }
-  return (
+    return (
       <Routes>
         <Route
           path="/"
@@ -32,10 +27,11 @@ function App() {
           />
         <Route path="/login" element={userLoggedIn ? <Navigate to="/" /> : <Login />} />
         <Route path="/signup" element={userLoggedIn ? <Navigate to="/" /> : <Signup />} />
-        <Route path="*" element={<Navigate to="/login" />} />
 
         <Route path="/integrationSuccess" element={token&&userLoggedIn?<Integrated/>:<Navigate to="/"/>}/>
         <Route path="/integrationSuccess/agentScreen" element={token&&userLoggedIn?<AgentScreen/>:<Navigate to="/"/>}/>
+        
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     
   );
