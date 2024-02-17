@@ -36,14 +36,12 @@ export function FBAuthProvider({children}){
 
       const handleLogin = async() => {
         if(FBuserLoggedIn){
-          console.log(FBuserLoggedIn);
           navigate("/integrationsuccess")
         }
         else{
           try {
             const response = await fbLogin();
             setFBUserLoggedIn(true);
-            console.log(response);
             navigate("/integrationSuccess")
           } catch (error) {
             console.log(error.message);
