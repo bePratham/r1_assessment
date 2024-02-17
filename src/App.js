@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {
   Route,
   Routes,
@@ -13,8 +13,17 @@ import Integrated from "./components/FB Pages/Integrated";
 import AgentScreen from "./components/AgentScreen/AgentScreen";
 
 function App() {
-  const {userLoggedIn }=useAuth();
+  const {userLoggedIn,loading }=useAuth();
   const token=localStorage.getItem(process.env.REACT_APP_FB_TOKEN) || false;
+
+  // useEffect(() => {
+  
+  // }, []);
+
+  if (loading) {
+   
+    return <div>Loading...</div>;
+  }
   return (
       <Routes>
         <Route

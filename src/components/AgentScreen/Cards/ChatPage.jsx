@@ -10,7 +10,7 @@ const fakeDatabase = [
   {
     id: 2,
     sender: "receiver",
-    message: "Hi there! How can I help you?",
+    message: "Does it look good?",
     imageUrl: "https://source.unsplash.com/5VXH4RG88gc/600x600",
   },
 ];
