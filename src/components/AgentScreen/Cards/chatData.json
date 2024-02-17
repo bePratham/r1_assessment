@@ -1,0 +1,15 @@
+[
+    {
+      "id": 1,
+      "sender": "user",
+      "message": "Welcome to the chat!",
+      "imageUrl": "https://source.unsplash.com/vpOeXr5wmR4/600x600"
+    },
+    {
+      "id": 2,
+      "sender": "receiver",
+      "message": "Hi there! How can I help you?",
+      "imageUrl": "https://source.unsplash.com/5VXH4RG88gc/600x600"
+    }
+  ]
+  

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import InboxList from './InboxList';
 import Conversation from './Conversation';
 import Details from './Details';
-import fakeData from './fakeData'; 
+import fakeData from '../DB/InboxData'; 
 
 const MessageApp = () => {
   const [selectedItem, setSelectedItem] = useState(null);

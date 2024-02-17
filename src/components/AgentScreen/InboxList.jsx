@@ -14,28 +14,30 @@ const InboxList = ({ people, selectedItem, setSelectedItem }) => {
           alt="Refresh"
         />
       </div>
-      <ul className="border-r-2 h-screen border-slate-300">
-        {people.map((person) => (
-          <li
-            key={person.id}
-            className={`cursor-pointer p-2 ${
-              selectedItem === person
-                ? "bg-gray-200"
-                : "bg-white hover:bg-gray-100"
-            }`}
-            onClick={() => setSelectedItem(person)}
-          >
-            <MessageCard
-              firstName={person.firstName}
-              lastName={person.lastName}
-              type={person.type}
-              content={person.content}
-              title={person.title}
-              time={person.time}
-            />
-          </li>
-        ))}
-      </ul>
+      <div className="h-screen pb-16 overflow-y-auto border-r-2 border-slate-300">
+        <ul>
+          {people.map((person) => (
+            <li
+              key={person.id}
+              className={`cursor-pointer p-2 ${
+                selectedItem === person
+                  ? "bg-gray-200"
+                  : "bg-white hover:bg-gray-100"
+              }`}
+              onClick={() => setSelectedItem(person)}
+            >
+              <MessageCard
+                firstName={person.firstName}
+                lastName={person.lastName}
+                type={person.type}
+                content={person.content}
+                title={person.title}
+                time={person.time}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

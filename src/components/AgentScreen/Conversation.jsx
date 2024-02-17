@@ -1,4 +1,5 @@
 import React from 'react';
+import ChatPage from './Cards/ChatPage';
 
 const Conversation = ({ selectedItem }) => {
   return (
@@ -7,6 +8,11 @@ const Conversation = ({ selectedItem }) => {
          <h1 className='font-bold text-2xl p-2.5 border-y-2 border-slate-300'>
           {selectedItem.firstName} {selectedItem.lastName}
          </h1>
+         <div className='h-max'>
+            <ChatPage/>
+          
+      {/* </div> */}
+         </div>
       </div>
     ) : (
       <div className="w-1/4 h-screen p-4 bg-slate-200">
