@@ -1,6 +1,7 @@
 import React from "react";
 
 const MessageCard = ({ firstName, lastName, type, content, title, time }) => {
+  
   return (
     <div className="overflow-hidden">
       <div className="flex justify-between">

@@ -2,16 +2,26 @@ export const initFacebookSdk = () => {
   return new Promise((resolve, reject) => {
     // Load the Facebook SDK asynchronously
     const script = document.createElement("script");
-    script.src = `https://connect.facebook.net/en_US/sdk.js`;
+    script.src = "https://connect.facebook.net/en_US/sdk.js";
     script.async = true;
+          (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk')
+      );
     script.onload = () => {
       window.fbAsyncInit = () => {
         window.FB.init({
-          appId: process.env.REACT_APP_FB_ID,
-          status: true,
+          appId: process.env.REACT_APP_FB_ID, // Replace with your actual app ID
+          cookie: true,
           xfbml: true,
-          version: "v2.7",
+          version: 'v3.3', // Replace with your desired API version
         });
+       
+        window.FB.AppEvents.logPageView();
         // Resolve the promise when the SDK is loaded
         resolve();
       };
@@ -22,6 +32,7 @@ export const initFacebookSdk = () => {
     document.head.appendChild(script);
   });
 };
+
 export const getFacebookLoginStatus = (navigate) => {
   return new Promise((resolve, reject) => {
     try {
@@ -54,7 +65,15 @@ export const fbLogin = (navigate) => {
         } else {
           reject(new Error("Facebook login failed."));
         }
-      });
+      },
+      {
+        config_id: '399772679311186'
+      },
+      {
+        scope: 'email,user_likes,publish_actions,read_page_mailboxes,pages_show_list,pages_messaging,page_events,pages_read_engagement,pages_read_user_content',
+      return_scopes:true
+    }
+      );
     } catch (err) {
       console.log("Failed complete");
       reject(err);

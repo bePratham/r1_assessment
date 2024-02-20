@@ -47,7 +47,6 @@ export function FBAuthProvider({children}){
           } catch (error) {
             console.log(error.message);
             setError(error.message);
-            // Handle error if needed
           }
         }
         window.location.reload();

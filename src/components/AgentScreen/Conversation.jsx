@@ -6,10 +6,10 @@ const Conversation = ({ selectedItem }) => {
     selectedItem ? (
       <div className="h-screen w-1/2 flex-row bg-gray-100"> 
          <h1 className='font-bold text-2xl p-2.5 border-y-2 border-slate-300'>
-          {selectedItem.firstName} {selectedItem.lastName}
+          {selectedItem.senders.data[0].name}
          </h1>
          <div className='h-max'>
-            <ChatPage/>
+            <ChatPage data={selectedItem}/>
          </div>
       </div>
     ) : (

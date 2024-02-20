@@ -1,77 +1,101 @@
 import React, { useState, useEffect } from "react";
 
-const fakeDatabase = [
-  {
-    id: 1,
-    sender: "user",
-    message: "Welcome to the chat!",
-    imageUrl: "https://source.unsplash.com/vpOeXr5wmR4/600x600",
-  },
-  {
-    id: 2,
-    sender: "receiver",
-    message: "Does it look good?",
-    imageUrl: "https://source.unsplash.com/5VXH4RG88gc/600x600",
-  },
-];
-
-const ChatComponent = () => {
-  const [messages, setMessages] = useState(() => {
-    return fakeDatabase;
-  });
+const ChatComponent = ({ DATA }) => {
+  const [messages, setMessages] = useState(() => DATA.data.messages.data);
   const [newMessage, setNewMessage] = useState("");
+  
+  useEffect(() => {
+    setMessages(DATA.data.messages.data);
+
+  }, [DATA]);
 
   const handleSendMessage = () => {
     const newMessageObj = {
-      id: messages.length + 1,
-      sender: "user",
       message: newMessage,
-      imageUrl: "https://source.unsplash.com/vpOeXr5wmR4/600x600",
+      from: {
+        name: "Testing app",
+        email: "185800634627301@facebook.com",
+        id: "185800634627301",
+      },
+      id: "185800634627301",
     };
 
     setMessages((prevMessages) => [...prevMessages, newMessageObj]);
     setNewMessage("");
   };
 
+  // Fetch data from the API
+  const fetchData = async () => {
+    const accessToken = process.env.REACT_APP_PAGE_ACCESS_TOKEN;
+
+    try {
+      const response = await fetch(
+        `https://graph.facebook.com/me?fields=conversations{id,senders,messages{message,from}}&access_token=${accessToken}`
+      );
+      const data = await response.json();
+        
+      // Assuming DATA is an object you want to match against
+      const dataToMatch = DATA.data.id;
+        console.log(data.conversations.data);
+        console.log(dataToMatch);
+      const matchedConversation = data.conversations.data?.find(
+        (conversation) => conversation.id === dataToMatch
+      );
+      const newMessages = matchedConversation?.messages?.data;
+      if (newMessages) {
+        setMessages(newMessages);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  
   useEffect(() => {
-    localStorage.setItem("chatMessages", JSON.stringify(messages));
-  }, [messages]);
+    fetchData();
+    // const pollInterval = setInterval(fetchData, 2500);
+    // return () => clearInterval(pollInterval);
+  }, [DATA]);
 
   return (
     <div className="w-full px-5 flex flex-col h-screen">
       <div className="flex flex-col mt-5 flex-grow overflow-y-auto">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.sender === "user" ? "justify-end" : "justify-start"
-            } mb-2`}
-          >
-            {message.sender === "user" ? (
-              <>
-                <div className="bg-blue-400 text-white py-2 px-3 rounded-lg max-w-xs">
-                  {message.message}
-                </div>
-                <img
-                  src={message.imageUrl}
-                  className="object-cover h-8 w-8 rounded-full ml-2"
-                  alt=""
-                />
-              </>
-            ) : (
-              <>
-                <img
-                  src={message.imageUrl}
-                  className="object-cover h-8 w-8 rounded-full mr-2"
-                  alt=""
-                />
-                <div className="bg-gray-300 py-2 px-3 rounded-lg max-w-xs">
-                  {message.message}
-                </div>
-              </>
-            )}
-          </div>
-        ))}
+        {messages
+          .slice()
+          .reverse()
+          .map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${
+                message.from.id === "185800634627301"
+                  ? "justify-end"
+                  : "justify-start"
+              } mb-2`}
+            >
+              {message.from.id === "185800634627301" ? (
+                <>
+                  <div className="bg-blue-400 text-white py-2 px-3 rounded-lg max-w-xs">
+                    {message.message}
+                  </div>
+                  <img
+                    src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                    className="object-cover h-8 w-8 rounded-full ml-2"
+                    alt=""
+                  />
+                </>
+              ) : (
+                <>
+                  <img
+                    src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                    className="object-cover h-8 w-8 rounded-full mr-2"
+                    alt=""
+                  />
+                  <div className="bg-gray-300 py-2 px-3 rounded-lg max-w-xs">
+                    {message.message}
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
       </div>
       <div className="py-5 mb-12">
         <div className="flex items-center">
@@ -93,11 +117,10 @@ const ChatComponent = () => {
     </div>
   );
 };
-
-const ChatPage = () => {
+const ChatPage = (data) => {
   return (
     <div className="flex">
-      <ChatComponent />
+      <ChatComponent DATA={data} />
     </div>
   );
 };

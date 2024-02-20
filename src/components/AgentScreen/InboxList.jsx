@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import menu from "./icons/menu.png";
 import MessageCard from "./Cards/MessageCard";
 
-const InboxList = ({ people, selectedItem, setSelectedItem }) => {
+const InboxList = ({ data, selectedItem, setSelectedItem }) => {
+  if (data == null) return <>Loading</>;
+
   return (
     <div className="w-1/4 bg-white">
       <div className="flex p-3  justify-between items-center border-2 border-slate-300">
@@ -16,7 +18,7 @@ const InboxList = ({ people, selectedItem, setSelectedItem }) => {
       </div>
       <div className="h-screen pb-16 overflow-y-auto border-r-2 border-slate-300">
         <ul>
-          {people.map((person) => (
+          {data.map((person) => (
             <li
               key={person.id}
               className={`cursor-pointer p-2 ${
@@ -27,12 +29,12 @@ const InboxList = ({ people, selectedItem, setSelectedItem }) => {
               onClick={() => setSelectedItem(person)}
             >
               <MessageCard
-                firstName={person.firstName}
-                lastName={person.lastName}
-                type={person.type}
-                content={person.content}
-                title={person.title}
-                time={person.time}
+                firstName={person.senders.data[0].name}
+                lastName=""
+                type="Facebook DM"
+                content={person.messages.data[0]?.message || "No message"} // Display first message or a default text
+                title="Awsome"
+                time=""
               />
             </li>
           ))}

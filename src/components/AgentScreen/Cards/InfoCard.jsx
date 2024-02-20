@@ -6,11 +6,11 @@ const InfoCard = ({ person }) => {
       <div className="bg-white py-7 flex flex-col items-center justify-center">
         <img
           className="border rounded-full w-1/4"
-          src={person.profileImageLink}
+          src="https://picsum.photos/200/200"
           alt=""
         />
         <h2 className="font-bold text-lg">
-          {person.firstName} {person.lastName}
+          {person.senders.data[0].name}
         </h2>
         <p className="text-sm font-semibold text-gray-500"> &#x2022; Offline</p>
         <div className="flex space-x-3 mt-2">
