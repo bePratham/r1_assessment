@@ -3,30 +3,47 @@ import React, { useState, useEffect } from "react";
 const ChatComponent = ({ DATA }) => {
   const [messages, setMessages] = useState(() => DATA.data.messages.data);
   const [newMessage, setNewMessage] = useState("");
-  
-  useEffect(() => {
-    setMessages(DATA.data.messages.data);
+  const [senderId, setSenderId] = useState();
+  const [personId,setPersonId]=useState(DATA.data.senders.data[0].id);
+  const accessToken = process.env.REACT_APP_PAGE_ACCESS_TOKEN;
 
+  useEffect(() => {
+    setPersonId(DATA.data.senders.data[0].id);
+    setMessages(DATA.data.messages.data);
   }, [DATA]);
 
-  const handleSendMessage = () => {
-    const newMessageObj = {
-      message: newMessage,
-      from: {
-        name: "Testing app",
-        email: "185800634627301@facebook.com",
-        id: "185800634627301",
-      },
-      id: "185800634627301",
-    };
+  const handleSendMessage = async() => {
+    const recipientId = personId;
+    const messageText = newMessage;
+    const url = `https://graph.facebook.com/v19.0/185800634627301/messages?recipient={id:${recipientId}}&message={text:${messageText}}&messaging_type=RESPONSE&access_token=${accessToken}`;
 
-    setMessages((prevMessages) => [...prevMessages, newMessageObj]);
+    const data = {
+      recipient: { id: recipientId },
+      message: { text: messageText },
+      messaging_type: 'RESPONSE',
+    }
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+
+      console.log('Message sent successfully:', result);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+    console.log(messages);
+    // setMessages((prevMessages) => [...prevMessages, newMessage]);
     setNewMessage("");
   };
 
   // Fetch data from the API
   const fetchData = async () => {
-    const accessToken = process.env.REACT_APP_PAGE_ACCESS_TOKEN;
 
     try {
       const response = await fetch(
@@ -36,8 +53,9 @@ const ChatComponent = ({ DATA }) => {
         
       // Assuming DATA is an object you want to match against
       const dataToMatch = DATA.data.id;
-        console.log(data.conversations.data);
-        console.log(dataToMatch);
+      setSenderId(dataToMatch);
+        // console.log(data.conversations.data);
+        // console.log(dataToMatch);
       const matchedConversation = data.conversations.data?.find(
         (conversation) => conversation.id === dataToMatch
       );
@@ -52,8 +70,8 @@ const ChatComponent = ({ DATA }) => {
   
   useEffect(() => {
     fetchData();
-    // const pollInterval = setInterval(fetchData, 2500);
-    // return () => clearInterval(pollInterval);
+    const pollInterval = setInterval(fetchData, 100);
+    return () => clearInterval(pollInterval);
   }, [DATA]);
 
   return (
