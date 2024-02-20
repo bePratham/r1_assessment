@@ -8,27 +8,33 @@ const ChatComponent = ({ DATA }) => {
   const accessToken = process.env.REACT_APP_PAGE_ACCESS_TOKEN;
 
   useEffect(() => {
+    setPersonId(DATA.data.senders.data[0].id);
+    setMessages(DATA.data.messages.data);
+
+    const intervalId = setInterval(() => {
+      fetchData(); // Fetch new messages
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [DATA]);
     const fetchData= async()=>{
       try{
-        setPersonId(DATA.data.senders.data[0].id);
-        if(personId){
-          setMessages(DATA.data.messages.data);
-          const response = await fetch(`https://graph.facebook.com/me?fields=conversations{id,senders,messages{message,from}}&access_token=${accessToken}`);
-          const data = await response.json();
-          const check=data.conversations.data;
-          console.log(check[0].id);
-          check.map((person)=>{if(person.id==personId){
-            setMessages(person.messages.data)
-          }
-          
-         } )
+        const response = await fetch(
+          `https://graph.facebook.com/me?fields=conversations{id,senders,messages{message,from}}&access_token=${accessToken}`
+        );
+        const data = await response.json();
+        const dataRequire=data.conversations.data;
+
+       for(let i=0;i<dataRequire.length;i++){
+        if(dataRequire[i].id===DATA.data.id){
+          setMessages(dataRequire[i].messages.data);
+          break;
         }
-      }catch{
-          console.log("EROOr");
-        }
+       }
+      } catch (error) {
+        console.error("Error fetching new messages:", error);
+      }
     }
-    fetchData();
-    }, [DATA, personId, accessToken]);
+  
   
   const handleSendMessage = async() => {
     const recipientId = personId;
