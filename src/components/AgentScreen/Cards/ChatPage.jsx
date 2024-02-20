@@ -10,6 +10,7 @@ const ChatComponent = ({ DATA }) => {
   useEffect(() => {
     setPersonId(DATA.data.senders.data[0].id);
     setMessages(DATA.data.messages.data);
+    console.log(DATA.data.id);
   }, [DATA]);
 
   const handleSendMessage = async() => {
@@ -37,42 +38,8 @@ const ChatComponent = ({ DATA }) => {
     } catch (error) {
       console.error('Error sending message:', error);
     }
-    console.log(messages);
-    // setMessages((prevMessages) => [...prevMessages, newMessage]);
     setNewMessage("");
   };
-
-  // Fetch data from the API
-  const fetchData = async () => {
-
-    try {
-      const response = await fetch(
-        `https://graph.facebook.com/me?fields=conversations{id,senders,messages{message,from}}&access_token=${accessToken}`
-      );
-      const data = await response.json();
-        
-      // Assuming DATA is an object you want to match against
-      const dataToMatch = DATA.data.id;
-      setSenderId(dataToMatch);
-        // console.log(data.conversations.data);
-        // console.log(dataToMatch);
-      const matchedConversation = data.conversations.data?.find(
-        (conversation) => conversation.id === dataToMatch
-      );
-      const newMessages = matchedConversation?.messages?.data;
-      if (newMessages) {
-        setMessages(newMessages);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  
-  useEffect(() => {
-    fetchData();
-    const pollInterval = setInterval(fetchData, 100);
-    return () => clearInterval(pollInterval);
-  }, [DATA]);
 
   return (
     <div className="w-full px-5 flex flex-col h-screen">

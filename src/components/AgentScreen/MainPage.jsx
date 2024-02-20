@@ -24,8 +24,9 @@ const MessageApp = () => {
         throw error;
       }
     }; 
-    fetchDataFromFacebook();   
-  },[])
+    fetchDataFromFacebook(); 
+    console.log(selectedItem);
+  },[selectedItem])
  
   return (
     
