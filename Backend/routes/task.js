@@ -19,6 +19,7 @@ router.post('/conversations', async (req, res) => {
   try {
     const newConversation = new Conversation(req.body);
     console.log(req.body);
+    console.log("database created successfully");
     const savedConversation = await newConversation.save();
     res.status(201).json(savedConversation);
   } catch (error) {
