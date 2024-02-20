@@ -11,8 +11,7 @@ const MessageApp = () => {
   const [inbox,setInbox]=useState();
   useEffect(()=>{
     const fetchDataFromFacebook = async () => {
-      const accessToken = process.env.REACT_APP_PAGE_ACCESS_TOKEN;
-    
+      const accessToken = process.env.REACT_APP_PAGE_ACCESS_TOKEN;  
       try {
         const response = await fetch(`https://graph.facebook.com/me?fields=conversations{id,senders,messages{message,from}}&access_token=${accessToken}`);
         const data = await response.json();
@@ -25,7 +24,6 @@ const MessageApp = () => {
       }
     }; 
     fetchDataFromFacebook(); 
-    console.log(selectedItem);
   },[selectedItem])
  
   return (

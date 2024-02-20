@@ -8,11 +8,28 @@ const ChatComponent = ({ DATA }) => {
   const accessToken = process.env.REACT_APP_PAGE_ACCESS_TOKEN;
 
   useEffect(() => {
-    setPersonId(DATA.data.senders.data[0].id);
-    setMessages(DATA.data.messages.data);
-    console.log(DATA.data.id);
-  }, [DATA]);
-
+    const fetchData= async()=>{
+      try{
+        setPersonId(DATA.data.senders.data[0].id);
+        if(personId){
+          setMessages(DATA.data.messages.data);
+          const response = await fetch(`https://graph.facebook.com/me?fields=conversations{id,senders,messages{message,from}}&access_token=${accessToken}`);
+          const data = await response.json();
+          const check=data.conversations.data;
+          console.log(check[0].id);
+          check.map((person)=>{if(person.id==personId){
+            setMessages(person.messages.data)
+          }
+          
+         } )
+        }
+      }catch{
+          console.log("EROOr");
+        }
+    }
+    fetchData();
+    }, [DATA, personId, accessToken]);
+  
   const handleSendMessage = async() => {
     const recipientId = personId;
     const messageText = newMessage;

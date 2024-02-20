@@ -5,7 +5,6 @@ import {
     fbLogin
   } from "../../utils/FacebookSDK";
 import { useNavigate } from 'react-router';
-import { log } from '@antoniosbarotsis/fake-db/src/util/log';
   
 const FBAuthContext = React.createContext();
 

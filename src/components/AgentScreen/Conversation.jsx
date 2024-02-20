@@ -15,7 +15,7 @@ const Conversation = ({ selectedItem }) => {
     ) : (
       <div className="w-1/4 h-screen p-4 bg-slate-200">
         <div className=" flex items-center justify-center text-gray-100">
-          Select an item to start Conversation
+          
         </div>
       </div>
     )
