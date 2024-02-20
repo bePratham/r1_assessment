@@ -22,8 +22,41 @@ const MessageApp = () => {
         console.error("Error fetching data from Facebook:", error);
         throw error;
       }
+      
     }; 
+    const saveInboxToBackend = async () => {
+      const filteredData = inbox.map((conversation) => ({
+        id: conversation.id,
+        senders: conversation.senders.data,
+        messages: conversation.messages.data,
+      }));
+      // Save inbox data to your backend
+      console.log(filteredData);
+      try {
+        const response = await fetch('http://localhost:8080/api/conversations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(filteredData),
+        });
+
+        if (response.ok) {
+          console.log('Inbox data successfully saved!');
+          // Handle success as needed
+        } else {
+          console.error('Failed to save inbox data');
+          // Handle failure as needed
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle error as needed
+      }
+    };
     fetchDataFromFacebook(); 
+    if(inbox){
+      saveInboxToBackend();
+    }
   },[selectedItem])
  
   return (

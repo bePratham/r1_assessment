@@ -1,17 +1,17 @@
 // index.js
-
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const taskRoutes = require('./routes/task');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-console.log(process.env.REACT_APP_MONGO_KEY);
 // Connect to MongoDB
-mongoose.connect(`mongodb+srv://prathamsinghkathayat:nNzb0xeQbUzsqa7L@cluster0.lvzlmme.mongodb.net/`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.REACT_APP_MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
+app.use(cors('*'));
 // Middleware
 app.use(express.json());
 

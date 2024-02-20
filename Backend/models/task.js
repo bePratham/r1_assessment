@@ -1,13 +1,27 @@
-// models/task.js
-
+// models/conversation.js
 const mongoose = require('mongoose');
 
-const taskSchema = new mongoose.Schema({
-  id: { type: String, required: true },
-  description: { type: String, required: false },
-  completed: { type: Boolean, default: false },
+const messageSchema = new mongoose.Schema({
+  from: {
+    name: String,
+    email: String,
+    id: Number,
+  },
+  message: String,
 });
 
-const Task = mongoose.model('Task', taskSchema);
+const senderSchema = new mongoose.Schema({
+  name: String,
+  id:Number,
+  email: String,
+});
 
-module.exports = Task;
+const conversationSchema = new mongoose.Schema({
+  id: String,
+  messages: [messageSchema],
+  senders: [senderSchema],
+});
+
+const Conversation = mongoose.model('Conversation', conversationSchema);
+
+module.exports = Conversation;
